@@ -63,8 +63,8 @@ osThreadId defaultTaskHandle;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_USART3_UART_Init(void);
 static void MX_DMA_Init(void);
+static void MX_USART3_UART_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_SAI1_Init(void);
 void StartDefaultTask(void const * argument);
@@ -113,8 +113,8 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_USART3_UART_Init();
   MX_DMA_Init();
+  MX_USART3_UART_Init();
   MX_I2C1_Init();
   MX_SAI1_Init();
   /* USER CODE BEGIN 2 */

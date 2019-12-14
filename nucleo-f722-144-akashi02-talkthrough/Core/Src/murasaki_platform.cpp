@@ -615,7 +615,7 @@ void TaskBodyFunction(const void *ptr) {
     float *rx_left = new float[CHANNEL_LEN];
     float *rx_right = new float[CHANNEL_LEN];
 
-    for (int i; i < CHANNEL_LEN; i++)
+    for (int i = 0; i < CHANNEL_LEN; i++)
             {
         tx_left[i] = 0.0;
         tx_right[i] = 0.0;
@@ -623,9 +623,28 @@ void TaskBodyFunction(const void *ptr) {
     
     murasaki::platform.codeec->Start();
 
+    // Input and Output gain setting. Still muting.
+    murasaki::platform.codeec->SetGain(
+                                       murasaki::kccLineInput,
+                                       0.0, /* dB */
+                                       0.0); /* dB */
+
+    murasaki::platform.codeec->SetGain(
+                                       murasaki::kccHeadphoneOutput,
+                                       0.0, /* dB */
+                                       0.0); /* dB */
+
+    // unmute the input and output channels.
+    murasaki::platform.codeec->Mute(
+                                    murasaki::kccLineInput,
+                                    false);                     // unmute
+    murasaki::platform.codeec->Mute(
+                                    murasaki::kccHeadphoneOutput,
+                                    false);                     // unmute
+
     while (true)  // Talk Through
     {
-        // waith the end of current audio transmission & receive. 
+        // waith the end of current audio transmission & receive.
         // Then, copy the tx buffer to tx DMA buffer.
         // And then copy the rx DMA buffer to rx buffer. 
         murasaki::platform.audio->TransmitAndReceive(
@@ -634,8 +653,7 @@ void TaskBodyFunction(const void *ptr) {
                                                      rx_left,
                                                      rx_right);
         // Copy RX to TX : talk through
-        for (int i; i < CHANNEL_LEN; i++)
-                {
+        for (int i = 0; i < CHANNEL_LEN; i++) {
             tx_left[i] = rx_left[i];
             tx_right[i] = rx_right[i];
         }
