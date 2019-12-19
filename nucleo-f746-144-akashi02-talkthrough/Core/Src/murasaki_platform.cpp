@@ -16,7 +16,7 @@
 // Include the prototype  of functions of this file.
 
 /* -------------------- PLATFORM Macros -------------------------- */
-#define CODEC_ADDR 0x38
+#define CODEC_I2C_DEVICE_ADDR 0x38
 #define CHANNEL_LEN 128
 /* -------------------- PLATFORM Type and classes -------------------------- */
 
@@ -78,7 +78,8 @@ void InitPlatform()
     // Set the debugger as AutoRePrint mode, for the easy operation.
     murasaki::debugger->AutoRePrint();  // type any key to show history.
 
-    // The port and pin names are fined by CubeIDE.
+    // Status LED registration.
+    // The port and pin names are defined by CubeIDE.
     murasaki::platform.led = new murasaki::BitOut(LD2_GPIO_Port, LD2_Pin);
     MURASAKI_ASSERT(nullptr != murasaki::platform.led)
     murasaki::platform.led_st0 = new murasaki::BitOut(ST0_GPIO_Port, ST0_Pin);
@@ -92,18 +93,21 @@ void InitPlatform()
 
     // Create an ADAU1361 CODEC controller.
     murasaki::platform.codeec = new murasaki::Adau1361(
-                                                       48000,
-                                                       12000000,
-                                                       murasaki::platform.i2c_master,
-                                                       CODEC_ADDR);
+                                                       48000, /* Fs 48kHz*/
+                                                       12000000, /* Master clock Xtal frequency, on the UMB-ADAU1361-A board */
+                                                       murasaki::platform.i2c_master, /* I2C master port to intgerface with CODEC */
+                                                       CODEC_I2C_DEVICE_ADDR); /* Address in 7 bit */
 
     MURASAKI_ASSERT(nullptr != murasaki::platform.codeec)
 
-    // Create an Audio Port
+    // Create an Audio Port as SAI.
+    // hsai_BlockB1 and hsai_BlockA1 are block B and A of the SAI1.
+    // These ports are configured by the configurator of the CubeIDE>
     murasaki::platform.audio_port = new murasaki::SaiPortAdaptor(
-                                                                 &hsai_BlockB1,
-                                                                 &hsai_BlockA1);
+                                                                 &hsai_BlockB1,     // TX port.
+            &hsai_BlockA1);    // RX port.
 
+    //
     MURASAKI_ASSERT(nullptr != murasaki::platform.audio_port)
 
     // Create an Audio Framework

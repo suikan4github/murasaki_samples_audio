@@ -14,16 +14,18 @@ The contents of the repository is a collection of the STM32 CubeIDE projects. Ea
 ## Usage
 Following projects are available. 
 
-nucleo-f722-144-akashi02-talkthrough : A project for Nucleo F722ZE. The audio signal to Line-in is copied to HP-out.
+___nucleo-f722-144-akashi02-talkthrough___ : A project for Nucleo F722ZE. The audio signal to Line-in is copied to HP-out.
 
-nucleo-f746-144-akashi02-talkthrough : A project for Nucleo F746ZG. The audio signal to Line-in is copied to HP-out.
+___nucleo-f746-144-akashi02-talkthrough___ : A project for Nucleo F746ZG. The audio signal to Line-in is copied to HP-out.
+
+In these demonstrations, audio is processed in the TaskBodyFunction() of murasaki_platform.cpp. This function is running as independent FreeRTOS task at realtime priority. Algorithm of this task is very simple. It start and un-mute the codec. And then do the copy from input to output forever. 
 
 ![Nucleo 144 + audio board](img/P_20191125_224443_vHDR_On_HP.jpg)
 
 ## Install
-1. Install the Egit to CubeIDE by Menu bar -> Help -> Eclipse Marketpalace...
-1. Clone [this repository](https://github.com/suikan4github/murasaki_samples_audio.git). Refer [the appropriate section in the Egit documentation](https://wiki.eclipse.org/EGit/User_Guide#Cloning_Remote_Repositories) to clone a repository.
-1. Import the audio demo project(s) in to workspace. Refer [the appropriate section in the Egit Documentation](https://wiki.eclipse.org/EGit/User_Guide#Starting_from_existing_Git_Repositories).
+1. Install the [Egit](https://www.eclipse.org/egit/) to CubeIDE by Menu bar -> Help -> Eclipse Marketpalace...
+1. Clone [this repository](https://github.com/suikan4github/murasaki_samples_audio.git). Refer [the appropriate section in the Egit documentation](https://wiki.eclipse.org/EGit/User_Guide#Cloning_Remote_Repositories) to understand how to clone a repository.
+1. Import the audio demo project(s) from git repository to workspace. Refer [the appropriate section in the Egit Documentation](https://wiki.eclipse.org/EGit/User_Guide#Starting_from_existing_Git_Repositories).
 1. Build and run
 ## Licence
 

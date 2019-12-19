@@ -16,7 +16,7 @@
 // Include the prototype  of functions of this file.
 
 /* -------------------- PLATFORM Macros -------------------------- */
-#define CODEC_ADDR 0x38
+#define CODEC_I2C_DEVICE_ADDR 0x38
 #define CHANNEL_LEN 128
 /* -------------------- PLATFORM Type and classes -------------------------- */
 
@@ -96,7 +96,7 @@ void InitPlatform()
                                                        48000,
                                                        12000000,
                                                        murasaki::platform.i2c_master,
-                                                       CODEC_ADDR);
+                                                       CODEC_I2C_DEVICE_ADDR);
 
     MURASAKI_ASSERT(nullptr != murasaki::platform.codeec)
 
