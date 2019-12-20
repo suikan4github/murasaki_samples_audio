@@ -43,7 +43,7 @@ struct Platform
 
     I2CMasterStrategy * i2c_master;  ///< I2C Master under test
 
-    AudioCodecStrategy * codeec;			///< Audio codec controller
+    AudioCodecStrategy * codec;			///< Audio codec controller
     AudioPortAdapterStrategy * audio_port;	///< Audio Interface serial port.
     DuplexAudio * audio;					///< The framework to exchange audio data.
 
