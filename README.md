@@ -30,6 +30,9 @@ In these demonstrations, audio is processed in the [TaskBodyFunction() of murasa
 1. Clone [this repository](https://github.com/suikan4github/murasaki_samples_audio.git). Refer [the appropriate section in the Egit documentation](https://wiki.eclipse.org/EGit/User_Guide#Cloning_Remote_Repositories) to understand how to clone a repository.
 1. Import the audio demo project(s) from git repository to workspace. Refer [the appropriate section in the Egit Documentation](https://wiki.eclipse.org/EGit/User_Guide#Starting_from_existing_Git_Repositories).
 1. Build and run
+
+For more information of importing, Refer [Murasaki Samples](https://github.com/suikan4github/murasaki_samples) project. 
+
 ## Licence
 
 [MIT](LICENCE)
