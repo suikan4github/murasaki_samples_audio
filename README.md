@@ -1,5 +1,14 @@
 v# murasaki_samples_audio
 Audio Sample projects for STM32CubeIDE
+
+## Table of contents
+* [Requirement](#requirement)
+* [Usage](#usage)
+* [Install](#install)
+* [License](#license)
+* [Author](#author)
+
+
 ## Description
 A collection of the Audio sample project for [murasaki](https://github.com/suikan4github/murasaki) project. 
 
@@ -7,10 +16,11 @@ The contents of this repository are collection of the STM32 CubeIDE projects. Ea
 
 ## Requirement
 - Ubuntu 16.04 LTS
-- STM32 CubeIDE v1.1.0
+- [STM32 CubeIDE v1.1.0](https://www.st.com/en/development-tools/stm32cubeide.html)
 - [Nucleo 144](https://www.st.com/ja/evaluation-tools/stm32-nucleo-boards.html). See below the actual name of the board. 
 - [UMB-ADAU1361-A](http://dsps.shop-pro.jp/?pid=82798273) board
 - [Akashi-02](https://github.com/suikan4github/Akashi-02) board to interface between the UMB-ADAU1361-A and Nucleo 144.
+
 ## Usage
 Following samples are available. 
 
@@ -33,9 +43,9 @@ In these demonstrations, audio is processed in the [TaskBodyFunction() of murasa
 
 For more information of importing, Refer [Murasaki Samples](https://github.com/suikan4github/murasaki_samples) project. 
 
-## Licence
+## License
 
-[MIT](LICENCE)
+[MIT](LICENSE)
 
 ## Author
 
