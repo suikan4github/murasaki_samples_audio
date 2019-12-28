@@ -1,4 +1,4 @@
-v# murasaki_samples_audio
+# murasaki_samples_audio
 Audio Sample projects for STM32CubeIDE
 
 ## Table of contents
