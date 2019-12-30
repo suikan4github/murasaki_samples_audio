@@ -28,7 +28,11 @@ Following samples are available.
 A project for [Nucleo F722ZE](https://www.st.com/content/st_com/ja/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-nucleo-boards/nucleo-f722ze.html). The audio signal to Line-in is copied to HP-out.
 
 ### nucleo-f746-144-akashi02-talkthrough
-A project for [Nucleo F746ZG](https://www.st.com/content/st_com/ja/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-nucleo-boards/nucleo-f746zg.html). The audio signal to Line-in is copied to HP-out.
+A project for [Nucleo F746ZG](https://www.st.com/content/st_com/ja/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-nucleo-boards/nucleo-f746zg.html). The audio signal to Line-in is copied to HP-out. 
+
+### nucleo-h743-144-akashi02-talkthrough
+A project for [Nucleo H743ZI](https://www.st.com/content/st_com/ja/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-nucleo-boards/nucleo-h743zi.html). The audio signal to Line-in is copied to HP-out. Note : This sample doesn't show the list of I2C device, to the console. An [I2C problem of the STM32H7 HAL](https://community.st.com/s/question/0D70X000007PwXg/bug-report-h743-hali2ctransmitit-respond-incorrectly-when-it-receives-nak) prevents this demo. 
+
 
 ### Description
 In these demonstrations, audio is processed in the [TaskBodyFunction() of murasaki_platform.cpp](https://github.com/suikan4github/murasaki_samples_audio/blob/f5f244cac2e12f1a8772ab1323214e0768015867/nucleo-f722-144-akashi02-talkthrough/Core/Src/murasaki_platform.cpp#L605). This function is running as independent FreeRTOS task at realtime priority. Algorithm of this task is very simple. It start and un-mute the codec. And then do the copy from input to output forever. 
