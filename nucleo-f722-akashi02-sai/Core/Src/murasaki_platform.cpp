@@ -125,6 +125,11 @@ void InitPlatform()
                                                              );
     MURASAKI_ASSERT(nullptr != murasaki::platform.audio_task)
 
+    // For synchronization between ExecPlatoform() and audio task.
+    murasaki::platform.codec_ready = new murasaki::Synchronizer();
+    MURASAKI_ASSERT(nullptr != murasaki::platform.codec_ready)
+
+
 }
 
 void ExecPlatform()
@@ -136,8 +141,27 @@ void ExecPlatform()
     // Start audio
     murasaki::platform.audio_task->Start();
 
-    murasaki::Sleep(100);
+    // Wait for the codec is ready.
+    murasaki::platform.codec_ready->Wait();
 
+    // Input and Output gain setting. Still muting.
+    murasaki::platform.codec->SetGain(
+                                      murasaki::kccLineInput,
+                                      0.0, /* dB */
+                                      0.0); /* dB */
+
+    murasaki::platform.codec->SetGain(
+                                      murasaki::kccHeadphoneOutput,
+                                      0.0, /* dB */
+                                      0.0); /* dB */
+
+    // unmute the input and output channels.
+    murasaki::platform.codec->Mute(
+                                   murasaki::kccLineInput,
+                                   false);                     // unmute
+    murasaki::platform.codec->Mute(
+                                   murasaki::kccHeadphoneOutput,
+                                   false);                     // unmute
 
 
     // Loop forever. Just status blinking.
@@ -180,24 +204,9 @@ void TaskBodyFunction(const void *ptr) {
     // Start codec activity.
     murasaki::platform.codec->Start();
 
-    // Input and Output gain setting. Still muting.
-    murasaki::platform.codec->SetGain(
-                                      murasaki::kccLineInput,
-                                      0.0, /* dB */
-                                      0.0); /* dB */
+    // Tell codec is ready.
+    murasaki::platform.codec_ready->Release();
 
-    murasaki::platform.codec->SetGain(
-                                      murasaki::kccHeadphoneOutput,
-                                      0.0, /* dB */
-                                      0.0); /* dB */
-
-    // unmute the input and output channels.
-    murasaki::platform.codec->Mute(
-                                   murasaki::kccLineInput,
-                                   false);                     // unmute
-    murasaki::platform.codec->Mute(
-                                   murasaki::kccHeadphoneOutput,
-                                   false);                     // unmute
 
     // Initiate the LED on the AKSAHI 02 board
     murasaki::platform.led_st0->Clear();
