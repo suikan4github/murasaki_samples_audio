@@ -144,16 +144,7 @@ void ExecPlatform()
     // Wait for the codec is ready.
     murasaki::platform.codec_ready->Wait();
 
-    // Input and Output gain setting. Still muting.
-    murasaki::platform.codec->SetGain(
-                                      murasaki::kccLineInput,
-                                      0.0, /* dB */
-                                      0.0); /* dB */
-
-    murasaki::platform.codec->SetGain(
-                                      murasaki::kccHeadphoneOutput,
-                                      0.0, /* dB */
-                                      0.0); /* dB */
+    murasaki::Sleep(30);
 
     // unmute the input and output channels.
     murasaki::platform.codec->Mute(
@@ -203,6 +194,17 @@ void TaskBodyFunction(const void *ptr) {
 
     // Start codec activity.
     murasaki::platform.codec->Start();
+
+    // Input and Output gain setting. Still muting.
+    murasaki::platform.codec->SetGain(
+                                      murasaki::kccLineInput,
+                                      0.0, /* dB */
+                                      0.0); /* dB */
+
+    murasaki::platform.codec->SetGain(
+                                      murasaki::kccHeadphoneOutput,
+                                      0.0, /* dB */
+                                      0.0); /* dB */
 
     // Tell codec is ready.
     murasaki::platform.codec_ready->Release();
