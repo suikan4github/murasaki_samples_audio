@@ -41,8 +41,8 @@ murasaki::Debugger *murasaki::debugger;
 // Following block is just sample.
 extern UART_HandleTypeDef huart3;
 extern I2C_HandleTypeDef hi2c1;
-extern SAI_HandleTypeDef hsai_BlockA1;
-extern SAI_HandleTypeDef hsai_BlockB1;
+extern I2S_HandleTypeDef hi2s1;
+extern I2S_HandleTypeDef hi2s2;
 
 /* -------------------- PLATFORM Prototypes ------------------------- */
 
@@ -99,12 +99,10 @@ void InitPlatform()
 
     MURASAKI_ASSERT(nullptr != murasaki::platform.codec)
 
-    // Create an Audio Port as SAI.
-    // hsai_BlockB1 and hsai_BlockA1 are block B and A of the SAI1.
-    // These ports are configured by the configurator of the CubeIDE>
-    murasaki::platform.audio_port = new murasaki::SaiPortAdapter(
-                                                                 &hsai_BlockB1, /* TX port.*/
-                                                                 &hsai_BlockA1); /* RX port. */
+    // Create an Audio Port as I2S.
+    murasaki::platform.audio_port = new murasaki::I2sPortAdapter(
+                                                                 &hi2s1, /* TX port.*/
+                                                                 &hi2s2); /* RX port. */
 
     MURASAKI_ASSERT(nullptr != murasaki::platform.audio_port)
 
@@ -538,6 +536,53 @@ void HAL_SAI_ErrorCallback(SAI_HandleTypeDef *hsai) {
 }
 
 #endif
+/* ------------------ I2S  -------------------------- */
+#ifdef HAL_I2S_MODULE_ENABLED
+/**
+ * @brief Optional I2S interrupt handler at buffer transfer halfway.
+ * @ingroup MURASAKI_PLATFORM_GROUP
+ * @param hsai Handler of the I2S device.
+ * @details
+ * Invoked after I2S RX DMA complete interrupt is at halfway.
+ * This interrupt have to be forwarded to the  murasaki::DuplexAudio::ReceiveCallback().
+ * The second parameter of the ReceiveCallback() have to be 0 which mean the halfway interrupt.
+ */
+void HAL_I2S_RxHalfCpltCallback(I2S_HandleTypeDef *hi2s) {
+    if (murasaki::platform.audio->DmaCallback(hi2s, 0))
+        return;
+}
+
+/**
+ * @brief Optional I2S interrupt handler at buffer transfer complete.
+ * @ingroup MURASAKI_PLATFORM_GROUP
+ * @param hsai Handler of the I2S device.
+ * @details
+ * Invoked after I2S RX DMA complete interrupt is at halfway.
+ * This interrupt have to be forwarded to the  murasaki::DuplexAudio::ReceiveCallback().
+ * The second parameter of the ReceiveCallback() have to be 1 which mean the complete interrupt.
+ */
+void HAL_I2S_RxCpltCallback(I2S_HandleTypeDef *hi2s) {
+    if (murasaki::platform.audio->DmaCallback(hi2s, 1))
+        return;
+}
+
+/**
+ * @brief Optional I2S error interrupt handler.
+ * @ingroup MURASAKI_PLATFORM_GROUP
+ * @param hsai Handler of the I2S device.
+ * @details
+ * The error have to be forwarded to murasaki::DuplexAudio::HandleError().
+ * Note that DuplexAudio::HandleError() trigger a hard fault.
+ * So, never return.
+ */
+
+void HAL_I2S_ErrorCallback(I2S_HandleTypeDef *hi2s) {
+    if (murasaki::platform.audio->HandleError(hi2s))
+        return;
+}
+
+#endif
+
 
 /* -------------------------- GPIO ---------------------------------- */
 
