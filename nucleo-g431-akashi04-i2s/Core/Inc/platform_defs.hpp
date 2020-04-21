@@ -38,7 +38,7 @@ struct Platform
     BitOutStrategy * led_st0;           ///< GP out Status 0
     BitOutStrategy * led_st1;           ///< GP out	Status 1
 
-    I2CMasterStrategy * i2c_master;  		///< I2C Master under test
+    I2cMasterStrategy * i2c_master;  		///< I2C Master under test
 
     AudioCodecStrategy * codec;				///< Audio codec controller
     AudioPortAdapterStrategy * audio_port;	///< Audio Interface serial port.
