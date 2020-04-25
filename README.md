@@ -16,26 +16,27 @@ The contents of this repository are collection of the STM32 CubeIDE projects. Ea
 
 ## Requirement
 - Ubuntu 16.04 LTS
-- [STM32 CubeIDE v1.1.0](https://www.st.com/en/development-tools/stm32cubeide.html)
+- [STM32 CubeIDE v1.3.0](https://www.st.com/en/development-tools/stm32cubeide.html)
 - [Nucleo 144](https://www.st.com/ja/evaluation-tools/stm32-nucleo-boards.html). See below the actual name of the board. 
 - [UMB-ADAU1361-A](http://dsps.shop-pro.jp/?pid=82798273) board
 - [Akashi-02](https://github.com/suikan4github/Akashi-02) board to interface between the UMB-ADAU1361-A and Nucleo 144.
+- [Akashi-04](https://github.com/suikan4github/Akashi-04) board to interface between the UMB-ADAU1361-A and Nucleo 64.
 
 ## Usage
 Following samples are available. 
 
-### nucleo-f722-144-akashi02-talkthrough
-A project for [Nucleo F722ZE](https://www.st.com/content/st_com/ja/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-nucleo-boards/nucleo-f722ze.html). The audio signal to Line-in is copied to HP-out.
+### nucleo-f722-akashi02-i2s
+A project for [Nucleo F722ZE](https://www.st.com/content/st_com/ja/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-nucleo-boards/nucleo-f722ze.html). The audio signal to Line-in is copied to HP-out. The Audio port of the microcomputer is the I2S port.
 
-### nucleo-f746-144-akashi02-talkthrough
-A project for [Nucleo F746ZG](https://www.st.com/content/st_com/ja/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-nucleo-boards/nucleo-f746zg.html). The audio signal to Line-in is copied to HP-out. 
+### nucleo-f722-akashi02-sai
+A project for [Nucleo F722ZE](https://www.st.com/content/st_com/ja/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-nucleo-boards/nucleo-f722ze.html). The audio signal to Line-in is copied to HP-out. The Audio port of the microconputer is the SAI port. 
 
-### nucleo-h743-144-akashi02-talkthrough
-A project for [Nucleo H743ZI](https://www.st.com/content/st_com/ja/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-nucleo-boards/nucleo-h743zi.html). The audio signal to Line-in is copied to HP-out. Note : This sample doesn't show the list of I2C device, to the console. An [I2C problem of the STM32H7 HAL](https://community.st.com/s/question/0D70X000007PwXg/bug-report-h743-hali2ctransmitit-respond-incorrectly-when-it-receives-nak) prevents this demo. 
+### nucleo-g431-akashi04-i2s
+A project for [Nucleo G431RB](https://www.st.com/content/st_com/ja/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-nucleo-boards/nucleo-g431rb.html). The audio signal to Line-in is copied to HP-out. The Audio port of the microprocessor is the I2S port.
 
 
 ### Description
-In these demonstrations, audio is processed in the [TaskBodyFunction() of murasaki_platform.cpp](https://github.com/suikan4github/murasaki_samples_audio/blob/f5f244cac2e12f1a8772ab1323214e0768015867/nucleo-f722-144-akashi02-talkthrough/Core/Src/murasaki_platform.cpp#L605). This function is running as independent FreeRTOS task at realtime priority. Algorithm of this task is very simple. It start and un-mute the codec. And then do the copy from input to output forever. 
+In these demonstrations, audio is processed in the [TaskBodyFunction() of murasaki_platform.cpp](https://github.com/suikan4github/murasaki_samples_audio/blob/c42183f71f9d819ceca1790b790a58e563511925/nucleo-f722-akashi02-i2s/Core/Src/murasaki_platform.cpp#L180). This function is running as independent FreeRTOS task at realtime priority. Algorithm of this task is very simple. It start and un-mute the codec. And then do the copy from input to output forever. 
 
 ![Nucleo 144 + audio board](img/P_20191125_224443_vHDR_On_HP.jpg)
 
